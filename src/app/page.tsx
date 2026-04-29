@@ -1,65 +1,164 @@
-import Image from "next/image";
+import {
+  ArrowRight,
+  BarChart3,
+  CalendarDays,
+  CheckCircle2,
+  ShieldCheck,
+  Sparkles,
+  Target,
+} from "lucide-react";
+import { BRAND } from "@/lib/constants";
+import { formatCurrency } from "@/lib/format";
+import { ButtonLink } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
-export default function Home() {
+const benefits = [
+  "Deudas ilimitadas",
+  "Plan personalizado de salida",
+  "Simulador de pagos",
+  "Comparador de estrategias",
+  "Calendario de pagos",
+  "Alertas inteligentes",
+  "Recomendaciones automáticas",
+  "Reporte mensual",
+  "Acceso de por vida",
+];
+
+export default function LandingPage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="bg-background text-foreground">
+      <section className="relative overflow-hidden bg-primary text-white">
+        <div className="mx-auto grid min-h-[92vh] max-w-7xl gap-10 px-4 py-8 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:px-8">
+          <div className="max-w-3xl">
+            <Badge variant="success" className="mb-6">
+              {BRAND.productName}
+            </Badge>
+            <h1 className="text-4xl font-black leading-tight tracking-normal sm:text-5xl lg:text-6xl">
+              Sal de deudas con un plan claro, inteligente y personalizado.
+            </h1>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-white/78 sm:text-lg">
+              Ingresa tus deudas, ingresos y gastos. Ruta Cero analiza tu situación y te dice qué pagar primero,
+              cuánto abonar y cómo salir más rápido.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <ButtonLink href="/register" size="lg" variant="success">
+                Obtener acceso vitalicio <ArrowRight className="h-5 w-5" />
+              </ButtonLink>
+              <ButtonLink href="/login" size="lg" variant="secondary">
+                Ya tengo cuenta
+              </ButtonLink>
+            </div>
+            <p className="mt-4 text-sm font-semibold text-white/70">
+              Un solo pago. Sin suscripciones. Sin cobros mensuales.
+            </p>
+          </div>
+
+          <div className="pb-10 lg:pb-0">
+            <div className="rounded-lg border border-white/15 bg-white p-4 text-primary shadow-2xl">
+              <div className="flex items-center justify-between gap-3 border-b border-line pb-4">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">Vista de producto</p>
+                  <p className="mt-1 text-lg font-black">Tu ruta hacia cero deudas</p>
+                </div>
+                <Badge variant="success">Pago único</Badge>
+              </div>
+              <div className="grid gap-3 py-4 sm:grid-cols-2">
+                <div className="rounded-lg bg-[#f4f7fa] p-4">
+                  <BarChart3 className="h-5 w-5 text-success" />
+                  <p className="mt-4 text-xs font-semibold text-muted">Total adeudado</p>
+                  <p className="mt-1 text-2xl font-black">{formatCurrency(12400000)}</p>
+                </div>
+                <div className="rounded-lg bg-[#f4f7fa] p-4">
+                  <Target className="h-5 w-5 text-danger" />
+                  <p className="mt-4 text-xs font-semibold text-muted">Deuda objetivo</p>
+                  <p className="mt-1 text-lg font-black">Tarjeta principal</p>
+                </div>
+              </div>
+              <div className="rounded-lg bg-primary p-4 text-white">
+                <p className="text-sm font-semibold text-white/70">Tu recomendación de este mes</p>
+                <p className="mt-2 text-xl font-black">Prioriza la deuda de mayor tasa</p>
+                <p className="mt-2 text-sm leading-6 text-white/75">
+                  Reducirás intereses y podrás adelantar tu fecha estimada de salida.
+                </p>
+              </div>
+              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                {[
+                  ["Score", "74/100"],
+                  ["Salida", "18 meses"],
+                  ["Ahorro", "$820.000"],
+                ].map(([label, value]) => (
+                  <div key={label} className="rounded-lg border border-line p-3">
+                    <p className="text-xs text-muted">{label}</p>
+                    <p className="mt-1 font-black">{value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section className="mx-auto grid max-w-7xl gap-6 px-4 py-16 sm:px-6 lg:grid-cols-3 lg:px-8">
+        {[
+          {
+            icon: Sparkles,
+            title: "Recomendación automática",
+            text: "Ruta Cero ordena tus deudas por urgencia, tasa, saldo y capacidad de pago.",
+          },
+          {
+            icon: CalendarDays,
+            title: "Calendario accionable",
+            text: "Visualiza próximos pagos y registra avances sin perder el hilo de tu plan.",
+          },
+          {
+            icon: ShieldCheck,
+            title: "Diseñado para decidir",
+            text: "Compara bola de nieve, avalancha, consolidación y refinanciación con contexto real.",
+          },
+        ].map((item) => {
+          const Icon = item.icon;
+          return (
+            <div key={item.title} className="rounded-lg border border-line bg-white p-6 shadow-sm">
+              <Icon className="h-7 w-7 text-success" />
+              <h2 className="mt-5 text-lg font-black text-primary">{item.title}</h2>
+              <p className="mt-3 text-sm leading-6 text-muted">{item.text}</p>
+            </div>
+          );
+        })}
+      </section>
+
+      <section className="bg-white py-16">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.9fr_1fr] lg:items-center lg:px-8">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-success">Acceso vitalicio</p>
+            <h2 className="mt-4 text-3xl font-black tracking-normal text-primary sm:text-4xl">
+              Paga una vez y empieza con un plan financiero personal.
+            </h2>
+            <p className="mt-4 text-base leading-7 text-muted">{BRAND.commercialCopy}</p>
+          </div>
+          <div className="rounded-lg border border-line bg-background p-6 shadow-sm">
+            <div className="flex flex-col gap-4 border-b border-line pb-5 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h3 className="text-2xl font-black text-primary">Acceso vitalicio</h3>
+                <p className="mt-1 text-sm text-muted">Precio de lanzamiento por tiempo limitado.</p>
+              </div>
+              <div className="text-4xl font-black text-primary">{formatCurrency(BRAND.price)}</div>
+            </div>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              {benefits.map((benefit) => (
+                <div key={benefit} className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                  <CheckCircle2 className="h-4 w-4 text-success" />
+                  {benefit}
+                </div>
+              ))}
+            </div>
+            <ButtonLink href="/register" className="mt-7 w-full" size="lg">
+              Pagar una vez y empezar
+            </ButtonLink>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
+

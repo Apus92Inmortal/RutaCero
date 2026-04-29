@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ruta Cero
 
-## Getting Started
+Ruta Cero es una app web fintech para organizar, analizar y eliminar deudas mediante planes personalizados. El producto está diseñado como **Ruta Cero - Acceso Vitalicio**: pago único por acceso de por vida, sin suscripciones y sin cobros mensuales.
 
-First, run the development server:
+## Stack
+
+- Next.js App Router
+- TypeScript estricto
+- Tailwind CSS
+- Supabase Auth + PostgreSQL
+- Recharts
+- React Hook Form + Zod
+
+## Instalación
+
+```bash
+npm install
+npm run dev
+```
+
+Abre `http://localhost:3000`.
+
+## Variables de entorno
+
+Crea `.env.local` con:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+
+PAYMENT_PROVIDER=
+PAYMENT_SECRET_KEY=
+PAYMENT_WEBHOOK_SECRET=
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+## Supabase
+
+1. Crea un proyecto en Supabase.
+2. Ejecuta el SQL de `supabase/schema.sql` en el SQL Editor.
+3. Configura las variables `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` y `SUPABASE_SERVICE_ROLE_KEY`.
+4. Para el flujo inmediato de registro a checkout, usa confirmación de correo desactivada durante desarrollo o ajusta el flujo de verificación según tu política de Auth.
+
+El SQL crea:
+
+- `profiles`
+- `debts`
+- `debt_payments`
+- `access_payments`
+- `goals`
+- `alerts`
+- `strategies`
+
+También activa RLS y políticas para que cada usuario solo gestione sus propios registros.
+
+## Pagos
+
+La cuenta se crea primero con `access_status = 'pending_payment'`. El checkout vive en `/checkout` y llama a:
+
+- `POST /api/payments/create-checkout`
+- `POST /api/payments/webhook`
+
+La integración real con Bold, Wompi, PayU u otra pasarela queda preparada en `src/app/api/payments/create-checkout/route.ts`. El webhook debe enviar un estado `approved` para activar:
+
+```text
+access_status = active
+access_type = lifetime
+lifetime_access_granted_at = now()
+```
+
+Ejemplo de webhook local:
+
+```bash
+curl -X POST http://localhost:3000/api/payments/webhook \
+  -H "Content-Type: application/json" \
+  -H "x-payment-webhook-secret: TU_SECRET" \
+  -d "{\"user_id\":\"UUID_DEL_USUARIO\",\"provider_payment_id\":\"ID_DEL_PAGO\",\"status\":\"approved\"}"
+```
+
+## Comandos
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
+npm run start
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Rutas principales
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `/` landing pública
+- `/login` y `/register`
+- `/checkout`
+- `/payment-required`, `/payment-pending`, `/payment-success`, `/payment-failed`
+- `/app`
+- `/app/onboarding`
+- `/app/debts`
+- `/app/simulator`
+- `/app/strategies`
+- `/app/calendar`
+- `/app/alerts`
+- `/app/recommendations`
+- `/app/education`
+- `/app/goals`
+- `/app/reports`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Motor financiero
 
-## Learn More
+La lógica financiera vive en `src/lib/financial-engine.ts` e incluye cálculo de deuda total, ratios, priorización, recomendación mensual, simulación de bola de nieve, avalancha, comparación de estrategias y evaluación de consolidación.
 
-To learn more about Next.js, take a look at the following resources:
+## Estado de esta versión
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+La app compila, tiene flujo visual de acceso vitalicio, Auth preparada con Supabase, rutas protegidas, CRUD base de deudas, onboarding, dashboard, simulador, comparador, calendario, alertas, recomendaciones, educación, metas y reporte mensual preparado para PDF futuro.
