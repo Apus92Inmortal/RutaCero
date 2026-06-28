@@ -7,24 +7,28 @@ import { BRAND } from "@/lib/constants";
 import { formatCurrency } from "@/lib/format";
 
 export default function RegisterPage() {
+  const priceLabel = `${formatCurrency(BRAND.price).replace(/\s/g, "")} ${BRAND.currency}`;
+
   return (
-    <main className="grid min-h-screen place-items-center px-4 py-10">
+    <main className="grid min-h-screen place-items-center bg-background px-4 py-8 sm:py-10">
       <Card className="w-full max-w-md">
-        <CardContent>
-          <Link href="/" aria-label="Ruta Cero by INTRA, inicio" className="inline-flex">
+        <CardContent className="p-6 sm:p-8">
+          <Link href="/" aria-label="Ruta Cero by INTRA, inicio" className="mx-auto flex w-fit">
             <Image
-              src={BRAND_ASSETS.rutaCero.logoCompact}
+              src={BRAND_ASSETS.rutaCero.logoPrimary}
               alt="Ruta Cero by INTRA"
-              width={180}
-              height={60}
+              width={220}
+              height={55}
               priority
-              className="h-12 w-auto object-contain"
+              className="h-auto w-52 max-w-full object-contain"
             />
           </Link>
-          <h1 className="mt-6 text-2xl font-black text-primary">Crea tu cuenta</h1>
-          <p className="mt-2 text-sm leading-6 text-muted">
-            Primero creamos tu cuenta en estado pendiente de pago. Luego podrás activar el acceso vitalicio por{" "}
-            {formatCurrency(BRAND.price)}.
+          <h1 className="mt-8 text-center text-2xl font-black text-primary">Obtén acceso a Ruta Cero</h1>
+          <p className="mt-2 text-center text-sm leading-6 text-muted">
+            Crea tu cuenta para activar tu plan financiero y continuar con el pago único.
+          </p>
+          <p className="mt-4 rounded-lg border border-line bg-surface p-3 text-center text-sm font-semibold leading-6 text-foreground">
+            Pago único de {priceLabel} · Acceso de por vida
           </p>
           <div className="mt-6">
             <RegisterForm />

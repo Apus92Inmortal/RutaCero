@@ -77,7 +77,7 @@ export default function LandingPage() {
         </div>
       </header>
 
-      <section className="overflow-hidden border-b border-line/70 bg-[#f7fafc]" aria-labelledby="landing-heading">
+      <section className="overflow-hidden border-b border-line/70 bg-background" aria-labelledby="landing-heading">
         <div className="mx-auto grid max-w-[1780px] items-center gap-12 px-5 py-12 sm:px-8 sm:py-16 xl:min-h-[612px] xl:grid-cols-[minmax(560px,0.7fr)_minmax(560px,1fr)] xl:gap-10 xl:px-12 xl:py-8">
           <div className="relative z-10 max-w-[620px] xl:translate-y-3 xl:pl-4">
             <Image
@@ -141,7 +141,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="beneficios" className="scroll-mt-24 bg-[#f8fbfd] px-5 py-14 sm:px-8 sm:py-16" aria-labelledby="benefits-heading">
+      <section id="beneficios" className="scroll-mt-24 bg-background px-5 py-14 sm:px-8 sm:py-16" aria-labelledby="benefits-heading">
         <div className="mx-auto max-w-[1480px]">
           <h2 id="benefits-heading" className="text-center text-3xl font-black tracking-normal text-primary sm:text-4xl">
             Decisiones claras, mes a mes

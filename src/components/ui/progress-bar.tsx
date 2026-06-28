@@ -20,10 +20,9 @@ export function ProgressBar({
   return (
     <div className="space-y-2">
       {label ? <div className="text-xs font-semibold text-muted">{label}</div> : null}
-      <div className="h-2 overflow-hidden rounded-full bg-[#e1e9f0]">
+      <div className="h-2 overflow-hidden rounded-full bg-line" aria-hidden="true">
         <div className={cn("h-full rounded-full", color)} style={{ width: `${safeValue}%` }} />
       </div>
     </div>
   );
 }
-

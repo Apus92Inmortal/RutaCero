@@ -8,9 +8,27 @@ import { loginSchema, type FormState } from "@/lib/validations";
 import { Button } from "@/components/ui/button";
 import { Field, Input } from "@/components/ui/field";
 
+function getLoginErrorMessage(error?: string) {
+  if (!error) return null;
+
+  const normalized = error.toLowerCase();
+  if (normalized.includes("invalid login credentials")) {
+    return "El email o la contraseña no coinciden. Revisa los datos e intenta de nuevo.";
+  }
+  if (normalized.includes("email not confirmed")) {
+    return "Confirma tu correo antes de iniciar sesión.";
+  }
+  if (normalized.includes("supabase")) {
+    return "No pudimos iniciar sesión por configuración. Inténtalo de nuevo más tarde.";
+  }
+
+  return error;
+}
+
 export function LoginForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction, pending] = useActionState<FormState, FormData>(loginAction, {});
+  const loginError = getLoginErrorMessage(state.error);
   const {
     register,
     handleSubmit,
@@ -32,15 +50,24 @@ export function LoginForm() {
       }}
       className="space-y-4"
     >
-      <Field label="Correo" error={errors.email?.message}>
-        <Input type="email" autoComplete="email" {...register("email")} />
+      <Field label="Email" error={errors.email?.message}>
+        <Input type="email" autoComplete="email" placeholder="tu@email.com" {...register("email")} />
       </Field>
       <Field label="Contraseña" error={errors.password?.message}>
-        <Input type="password" autoComplete="current-password" {...register("password")} />
+        <Input
+          type="password"
+          autoComplete="current-password"
+          placeholder="Tu contraseña"
+          {...register("password")}
+        />
       </Field>
-      {state.error ? <p className="text-sm font-medium text-danger">{state.error}</p> : null}
-      <Button className="w-full" disabled={pending}>
-        {pending ? "Ingresando..." : "Ingresar"}
+      {loginError ? (
+        <p className="rounded-lg bg-danger/10 p-3 text-sm font-medium text-danger" aria-live="polite">
+          {loginError}
+        </p>
+      ) : null}
+      <Button type="submit" className="w-full" disabled={pending}>
+        {pending ? "Ingresando..." : "Iniciar sesión"}
       </Button>
     </form>
   );

@@ -133,7 +133,7 @@ export function ProductPreview() {
             <h2 className="text-xl font-black tracking-normal text-primary sm:text-2xl lg:text-[1.7rem]">
               Tu ruta hacia cero deudas
             </h2>
-            <span className="rounded-full border border-line bg-[#eef4f8] px-3 py-1 text-[10px] font-bold text-primary">
+            <span className="rounded-full border border-line bg-surface px-3 py-1 text-[10px] font-bold text-primary">
               Datos demo
             </span>
           </div>
@@ -151,7 +151,7 @@ export function ProductPreview() {
                       {metric.value}
                     </p>
                   </div>
-                  <div className={`hidden rounded-full p-2 2xl:block ${isGreen ? "bg-success/15 text-success" : "bg-[#eef4f8] text-primary"}`}>
+                  <div className={`hidden rounded-full p-2 2xl:block ${isGreen ? "bg-success/15 text-success" : "bg-surface text-primary"}`}>
                     <Icon className="h-5 w-5" strokeWidth={1.8} />
                   </div>
                 </div>
@@ -178,7 +178,7 @@ export function ProductPreview() {
               <span className="font-semibold text-primary">42% completado</span>
             </div>
             <div className="mt-2 flex items-center gap-4">
-              <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#e1e9f0]">
+              <div className="h-2 flex-1 overflow-hidden rounded-full bg-line">
                 <div className="h-full w-[42%] rounded-full bg-success" />
               </div>
               <span className="whitespace-nowrap text-[9px] text-muted">7 de 18 meses</span>

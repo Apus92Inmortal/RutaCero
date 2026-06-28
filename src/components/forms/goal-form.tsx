@@ -30,23 +30,37 @@ export function GoalForm() {
           startTransition(() => formAction(new FormData(formRef.current!)));
         })(event);
       }}
-      className="grid gap-4 md:grid-cols-4"
+      className="space-y-5"
     >
-      <Field label="Meta" error={errors.title?.message}>
-        <Input {...register("title")} />
-      </Field>
-      <Field label="Monto objetivo">
-        <Input type="number" min="0" step="1000" {...register("target_amount")} />
-      </Field>
-      <Field label="Avance actual">
-        <Input type="number" min="0" step="1000" {...register("current_amount")} />
-      </Field>
-      <Field label="Fecha objetivo">
-        <Input type="date" {...register("target_date")} />
-      </Field>
-      {state.error ? <p className="md:col-span-4 text-sm font-medium text-danger">{state.error}</p> : null}
-      <div className="md:col-span-4">
-        <Button disabled={pending}>{pending ? "Guardando..." : "Crear meta"}</Button>
+      <p className="rounded-lg border border-line bg-surface p-3 text-sm leading-6 text-muted">
+        Puedes ajustar esta meta más adelante.
+      </p>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <Field label="Nombre de la meta" error={errors.title?.message}>
+          <Input placeholder="Ej. Fondo de emergencia" {...register("title")} />
+        </Field>
+        <Field label="Monto objetivo" error={errors.target_amount?.message}>
+          <Input type="number" min="0" step="1000" inputMode="numeric" placeholder="Ej. 2000000" {...register("target_amount")} />
+        </Field>
+        <Field label="Progreso acumulado" error={errors.current_amount?.message}>
+          <Input type="number" min="0" step="1000" inputMode="numeric" placeholder="Ej. 300000" {...register("current_amount")} />
+        </Field>
+        <Field label="Fecha objetivo" error={errors.target_date?.message}>
+          <Input type="date" {...register("target_date")} />
+        </Field>
+      </div>
+
+      {state.error ? (
+        <p className="rounded-lg bg-danger/10 p-3 text-sm font-medium text-danger" aria-live="polite">
+          No pudimos guardar la meta. Revisa los datos e inténtalo de nuevo.
+        </p>
+      ) : null}
+
+      <div className="border-t border-line pt-5">
+        <Button type="submit" className="w-full sm:w-auto" disabled={pending}>
+          {pending ? "Guardando..." : "Crear meta"}
+        </Button>
       </div>
     </form>
   );

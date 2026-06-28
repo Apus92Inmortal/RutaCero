@@ -1,21 +1,19 @@
+import { CheckCircle2 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { AccessActivationCard } from "@/components/payments/access-activation-card";
 
 export default function PaymentSuccessPage() {
   return (
-    <main className="grid min-h-screen place-items-center px-4 py-10">
-      <Card className="w-full max-w-lg text-center">
-        <CardContent>
-          <h1 className="text-3xl font-black text-primary">Pago aprobado</h1>
-          <p className="mt-4 text-sm leading-6 text-muted">
-            Tu acceso vitalicio ya está activo. Ahora puedes crear tu plan financiero personalizado.
-          </p>
-          <ButtonLink href="/app/onboarding" className="mt-7">
-            Crear mi plan financiero
-          </ButtonLink>
-        </CardContent>
-      </Card>
-    </main>
+    <AccessActivationCard
+      title="Acceso activado"
+      description="Tu acceso a Ruta Cero quedó activo. Ya puedes continuar con tu plan financiero."
+    >
+      <div className="mx-auto mt-6 flex h-12 w-12 items-center justify-center rounded-full bg-success/10 text-success">
+        <CheckCircle2 className="h-6 w-6" aria-hidden="true" />
+      </div>
+      <ButtonLink href="/app/onboarding" className="mt-7 w-full" size="lg">
+        Continuar
+      </ButtonLink>
+    </AccessActivationCard>
   );
 }
-

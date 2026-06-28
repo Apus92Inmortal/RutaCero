@@ -2,11 +2,11 @@ import type { HTMLAttributes } from "react";
 import { cn } from "@/lib/cn";
 
 const variants = {
-  default: "bg-[#e8f0f6] text-primary",
-  success: "bg-[#e8f9ef] text-[#14753b]",
-  warning: "bg-[#fff6d8] text-[#806100]",
-  danger: "bg-[#fdecea] text-danger",
-  info: "bg-[#e9f5ff] text-[#0c5c93]",
+  default: "bg-surface text-primary ring-1 ring-line",
+  success: "bg-success/15 text-primary ring-1 ring-success/25",
+  warning: "bg-warning/20 text-primary ring-1 ring-warning/30",
+  danger: "bg-danger/10 text-danger ring-1 ring-danger/20",
+  info: "bg-primary/10 text-primary ring-1 ring-primary/15",
 };
 
 export function Badge({
@@ -25,4 +25,3 @@ export function Badge({
     />
   );
 }
-

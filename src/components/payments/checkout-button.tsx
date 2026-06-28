@@ -27,9 +27,13 @@ export function CheckoutButton() {
     <div className="space-y-3">
       <Button type="button" className="w-full" size="lg" onClick={createCheckout} disabled={loading}>
         <CreditCard className="h-5 w-5" />
-        {loading ? "Preparando pago..." : "Pagar y activar mi cuenta"}
+        {loading ? "Preparando pago..." : "Pagar y activar acceso"}
       </Button>
-      {error ? <p className="text-center text-sm font-medium text-danger">{error}</p> : null}
+      {error ? (
+        <p className="rounded-lg bg-danger/10 p-3 text-center text-sm font-medium text-danger" aria-live="polite">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }

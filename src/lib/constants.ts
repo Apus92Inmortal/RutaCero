@@ -5,7 +5,6 @@ import {
   CalendarDays,
   CircleDollarSign,
   Gauge,
-  Home,
   Lightbulb,
   ListChecks,
   Target,
@@ -16,26 +15,24 @@ import {
 export const BRAND = {
   name: "Ruta Cero",
   slogan: "Tu plan inteligente para salir de deudas",
-  productName: "Ruta Cero - Acceso Vitalicio",
+  productName: "Ruta Cero - Acceso de por vida",
   price: 49900,
   currency: "COP",
-  commercialCopy:
-    "Paga una sola vez y recibe acceso de por vida. Sin suscripciones. Sin cobros mensuales.",
+  commercialCopy: "Pago único de $49.900 COP con acceso de por vida.",
 };
 
 export const APP_NAV_ITEMS = [
-  { href: "/app", label: "Dashboard", icon: Home },
-  { href: "/app/profile", label: "Perfil", icon: UserRound },
-  { href: "/app/debts", label: "Deudas", icon: WalletCards },
-  { href: "/app/summary", label: "Resumen", icon: BarChart3 },
+  { href: "/app", label: "Resumen", icon: BarChart3 },
+  { href: "/app/debts", label: "Tus deudas", icon: WalletCards },
   { href: "/app/simulator", label: "Simulador", icon: Gauge },
-  { href: "/app/strategies", label: "Estrategias", icon: ListChecks },
+  { href: "/app/strategies", label: "Estrategia", icon: ListChecks },
   { href: "/app/calendar", label: "Calendario", icon: CalendarDays },
   { href: "/app/alerts", label: "Alertas", icon: AlertTriangle },
   { href: "/app/recommendations", label: "Recomendaciones", icon: Lightbulb },
   { href: "/app/education", label: "Educación", icon: BookOpen },
   { href: "/app/goals", label: "Metas", icon: Target },
   { href: "/app/reports", label: "Reporte", icon: CircleDollarSign },
+  { href: "/app/profile", label: "Perfil", icon: UserRound },
 ];
 
 export const MOBILE_NAV_ITEMS = APP_NAV_ITEMS.filter((item) =>

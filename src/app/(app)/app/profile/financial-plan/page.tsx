@@ -11,11 +11,11 @@ export default async function FinancialPlanPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Actualizar mi plan financiero"
-        description="Ajusta tus ingresos, gastos y capacidad de pago para recalcular tu ruta hacia cero deudas."
+        title="Perfil y plan financiero"
+        description="Actualiza los datos que ayudan a personalizar tu ruta cuando tu situación cambie."
         action={
           <ButtonLink href="/app/profile" variant="secondary" size="sm">
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Volver al perfil
           </ButtonLink>
         }
@@ -28,7 +28,7 @@ export default async function FinancialPlanPage() {
         <CardContent>
           <OnboardingForm
             profile={profile}
-            submitLabel="Guardar cambios"
+            submitLabel="Actualizar plan"
             pendingLabel="Actualizando..."
             redirectTo="/app/profile"
           />

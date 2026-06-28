@@ -12,35 +12,35 @@ export default async function LoginPage({
   const params = await searchParams;
 
   return (
-    <main className="grid min-h-screen place-items-center px-4 py-10">
+    <main className="grid min-h-screen place-items-center bg-background px-4 py-8 sm:py-10">
       <Card className="w-full max-w-md">
-        <CardContent>
-          <Link href="/" aria-label="Ruta Cero by INTRA, inicio" className="inline-flex">
+        <CardContent className="p-6 sm:p-8">
+          <Link href="/" aria-label="Ruta Cero by INTRA, inicio" className="mx-auto flex w-fit">
             <Image
-              src={BRAND_ASSETS.rutaCero.logoCompact}
+              src={BRAND_ASSETS.rutaCero.logoPrimary}
               alt="Ruta Cero by INTRA"
-              width={180}
-              height={60}
+              width={220}
+              height={55}
               priority
-              className="h-12 w-auto object-contain"
+              className="h-auto w-52 max-w-full object-contain"
             />
           </Link>
-          <h1 className="mt-6 text-2xl font-black text-primary">Inicia sesión</h1>
-          <p className="mt-2 text-sm leading-6 text-muted">
-            Entra a tu acceso vitalicio para continuar tu ruta hacia cero deudas.
+          <h1 className="mt-8 text-center text-2xl font-black text-primary">Inicia sesión en Ruta Cero</h1>
+          <p className="mt-2 text-center text-sm leading-6 text-muted">
+            Entra a tu cuenta para continuar con tu plan financiero.
           </p>
           {params.error === "config" ? (
-            <p className="mt-4 rounded-lg bg-[#fdecea] p-3 text-sm font-medium text-danger">
-              Faltan variables de Supabase. Revisa el archivo `.env.local`.
+            <p className="mt-4 rounded-lg bg-danger/10 p-3 text-sm font-medium text-danger">
+              No pudimos cargar el inicio de sesión. Inténtalo de nuevo más tarde.
             </p>
           ) : null}
           <div className="mt-6">
             <LoginForm />
           </div>
           <p className="mt-6 text-center text-sm text-muted">
-            ¿No tienes cuenta?{" "}
+            ¿Aún no tienes cuenta?{" "}
             <Link href="/register" className="font-semibold text-primary hover:underline">
-              Obtener acceso vitalicio
+              Obtener acceso
             </Link>
           </p>
         </CardContent>

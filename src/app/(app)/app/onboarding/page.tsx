@@ -10,15 +10,20 @@ export default async function OnboardingPage() {
     <div className="space-y-6">
       <PageHeader
         title="Crea tu plan financiero"
-        description="Completa tu punto de partida. Con estos datos Ruta Cero calcula capacidad, urgencia y estrategia recomendada."
+        description="Cuéntanos lo básico sobre tus ingresos y capacidad de pago para personalizar tu ruta."
       />
-      <Card>
-        <CardHeader title="Información inicial" />
-        <CardContent>
+      <Card className="max-w-4xl">
+        <CardHeader
+          title="Información inicial"
+          description="Esta información ayuda a calcular y organizar tu primer plan financiero."
+        />
+        <CardContent className="space-y-5">
+          <p className="rounded-lg border border-line bg-surface p-3 text-sm leading-6 text-muted">
+            Puedes ajustar estos datos más adelante desde tu perfil.
+          </p>
           {profile ? <OnboardingForm profile={profile} /> : null}
         </CardContent>
       </Card>
     </div>
   );
 }
-

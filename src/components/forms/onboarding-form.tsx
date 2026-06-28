@@ -12,8 +12,8 @@ import type { Profile } from "@/lib/types";
 
 export function OnboardingForm({
   profile,
-  submitLabel = "Crear mi plan financiero",
-  pendingLabel = "Guardando...",
+  submitLabel = "Crear mi plan",
+  pendingLabel = "Creando plan...",
   redirectTo = "/app",
 }: {
   profile: Profile;
@@ -50,42 +50,106 @@ export function OnboardingForm({
           startTransition(() => formAction(new FormData(formRef.current!)));
         })(event);
       }}
-      className="grid gap-4 md:grid-cols-2"
+      className="space-y-6"
     >
       <input type="hidden" name="redirect_to" value={redirectTo} />
-      <Field label="Nombre" error={errors.full_name?.message}>
-        <Input {...register("full_name")} />
-      </Field>
-      <Field label="Ingresos mensuales">
-        <Input type="number" min="0" step="1000" {...register("monthly_income")} />
-      </Field>
-      <Field label="Gastos fijos">
-        <Input type="number" min="0" step="1000" {...register("fixed_expenses")} />
-      </Field>
-      <Field label="Gastos variables">
-        <Input type="number" min="0" step="1000" {...register("variable_expenses")} />
-      </Field>
-      <Field label="Dinero disponible para pagar deudas">
-        <Input type="number" min="0" step="1000" {...register("debt_budget")} />
-      </Field>
-      <Field label="Capacidad de abono extra">
-        <Input type="number" min="0" step="1000" {...register("extra_payment_capacity")} />
-      </Field>
-      <Field label="Nivel de urgencia financiera">
-        <Select {...register("urgency_level")}>
-          {URGENCY_LEVELS.map((level) => (
-            <option key={level.value} value={level.value}>
-              {level.label}
-            </option>
-          ))}
-        </Select>
-      </Field>
-      <div className="flex items-end">
-        <Button className="w-full" disabled={pending}>
+
+      <fieldset className="space-y-4">
+        <legend className="text-base font-black text-primary">Datos básicos</legend>
+        <p className="text-sm leading-6 text-muted">Puedes ajustar estos datos cuando tu situación cambie.</p>
+        <div className="grid gap-4 md:grid-cols-2">
+          <Field label="Nombre" error={errors.full_name?.message}>
+            <Input autoComplete="name" placeholder="Tu nombre" {...register("full_name")} />
+          </Field>
+          <Field label="Nivel de urgencia financiera" error={errors.urgency_level?.message}>
+            <Select {...register("urgency_level")}>
+              {URGENCY_LEVELS.map((level) => (
+                <option key={level.value} value={level.value}>
+                  {level.label}
+                </option>
+              ))}
+            </Select>
+          </Field>
+        </div>
+      </fieldset>
+
+      <fieldset className="space-y-4">
+        <legend className="text-base font-black text-primary">Presupuesto mensual</legend>
+        <p className="text-sm leading-6 text-muted">Usa valores aproximados. No necesitas tener todo perfecto hoy.</p>
+        <div className="grid gap-4 md:grid-cols-3">
+          <Field label="Ingresos mensuales" error={errors.monthly_income?.message}>
+            <Input
+              type="number"
+              min="0"
+              step="1000"
+              inputMode="numeric"
+              placeholder="Ej. 2500000"
+              {...register("monthly_income")}
+            />
+          </Field>
+          <Field label="Gastos fijos aproximados" error={errors.fixed_expenses?.message}>
+            <Input
+              type="number"
+              min="0"
+              step="1000"
+              inputMode="numeric"
+              placeholder="Ej. 1200000"
+              {...register("fixed_expenses")}
+            />
+          </Field>
+          <Field label="Gastos variables aproximados" error={errors.variable_expenses?.message}>
+            <Input
+              type="number"
+              min="0"
+              step="1000"
+              inputMode="numeric"
+              placeholder="Ej. 500000"
+              {...register("variable_expenses")}
+            />
+          </Field>
+        </div>
+      </fieldset>
+
+      <fieldset className="space-y-4">
+        <legend className="text-base font-black text-primary">Capacidad de pago</legend>
+        <p className="text-sm leading-6 text-muted">
+          Esta información ayuda a calcular recomendaciones más realistas para tu plan.
+        </p>
+        <div className="grid gap-4 md:grid-cols-2">
+          <Field label="Capacidad de pago para deudas" error={errors.debt_budget?.message}>
+            <Input
+              type="number"
+              min="0"
+              step="1000"
+              inputMode="numeric"
+              placeholder="Ej. 600000"
+              {...register("debt_budget")}
+            />
+          </Field>
+          <Field label="Meta mensual de abono extra" error={errors.extra_payment_capacity?.message}>
+            <Input
+              type="number"
+              min="0"
+              step="1000"
+              inputMode="numeric"
+              placeholder="Ej. 100000"
+              {...register("extra_payment_capacity")}
+            />
+          </Field>
+        </div>
+      </fieldset>
+
+      {state.error ? (
+        <p className="rounded-lg bg-danger/10 p-3 text-sm font-medium text-danger" aria-live="polite">
+          {state.error}
+        </p>
+      ) : null}
+
+      <div className="border-t border-line pt-5">
+        <Button type="submit" className="w-full sm:w-auto" disabled={pending}>
           {pending ? pendingLabel : submitLabel}
         </Button>
       </div>
-      {state.error ? <p className="md:col-span-2 text-sm font-medium text-danger">{state.error}</p> : null}
     </form>
   );
 }

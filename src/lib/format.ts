@@ -28,4 +28,3 @@ export function estimateDebtFreeDate(months: number, from = new Date()) {
     year: "numeric",
   }).format(result);
 }
-

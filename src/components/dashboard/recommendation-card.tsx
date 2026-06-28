@@ -1,6 +1,7 @@
-import { Lightbulb } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { ArrowRight, Lightbulb } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { ButtonLink } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/format";
 import type { Debt, StrategyType } from "@/lib/types";
 
@@ -29,23 +30,31 @@ export function RecommendationCard({
   strategy: StrategyType;
 }) {
   return (
-    <Card className="border-primary/20 bg-primary text-white">
+    <Card>
       <CardContent className="grid gap-6 md:grid-cols-[1.5fr_1fr]">
-        <div>
+        <section aria-labelledby="main-recommendation-title">
           <div className="flex items-center gap-2">
-            <Lightbulb className="h-5 w-5 text-success" />
-            <p className="text-sm font-semibold text-white/75">Tu recomendación de este mes</p>
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-success/10 text-primary">
+              <Lightbulb className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <Badge variant="success">Recomendación principal</Badge>
           </div>
-          <h2 className="mt-4 text-2xl font-black tracking-normal">{title}</h2>
-          <p className="mt-3 max-w-3xl text-sm leading-6 text-white/80">{body}</p>
-          <p className="mt-4 rounded-lg bg-white/10 px-4 py-3 text-sm font-semibold text-white">{impact}</p>
-        </div>
-        <div className="rounded-lg bg-white p-4 text-primary">
-          <Badge variant="success">{strategyLabels[strategy]}</Badge>
+          <h2 id="main-recommendation-title" className="mt-4 text-2xl font-black tracking-normal text-primary">
+            {cleanText(title)}
+          </h2>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-muted">{cleanText(body)}</p>
+          <div className="mt-4 rounded-lg border border-line bg-surface px-4 py-3">
+            <p className="text-sm font-semibold text-primary">Por qué importa</p>
+            <p className="mt-2 text-sm leading-6 text-muted">{cleanText(impact)}</p>
+          </div>
+        </section>
+
+        <aside className="rounded-lg border border-line bg-surface p-4 text-primary" aria-label="Resumen de recomendación">
+          <Badge variant="default">{strategyLabels[strategy]}</Badge>
           {targetDebt ? (
-            <div className="mt-5 space-y-3">
+            <div className="mt-5 space-y-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Deuda objetivo</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Deuda prioritaria</p>
                 <p className="mt-1 text-lg font-black">{targetDebt.name}</p>
               </div>
               <div className="grid grid-cols-2 gap-3 text-sm">
@@ -58,13 +67,30 @@ export function RecommendationCard({
                   <p className="font-bold">{formatCurrency(targetDebt.monthly_payment)}</p>
                 </div>
               </div>
+              <ButtonLink href={`/app/debts/${targetDebt.id}`} variant="secondary" size="sm" className="w-full">
+                Revisar deuda
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </ButtonLink>
             </div>
           ) : (
-            <p className="mt-5 text-sm leading-6 text-muted">Agrega tus deudas para activar recomendaciones precisas.</p>
+            <div className="mt-5 space-y-4">
+              <p className="text-sm leading-6 text-muted">Agrega tus deudas para activar recomendaciones precisas.</p>
+              <ButtonLink href="/app/debts/new" variant="secondary" size="sm" className="w-full">
+                Agregar deuda
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </ButtonLink>
+            </div>
           )}
-        </div>
+        </aside>
       </CardContent>
     </Card>
   );
 }
 
+function cleanText(value: string) {
+  const hasMojibake = value.includes(String.fromCharCode(195)) || value.includes(String.fromCharCode(194));
+  if (!hasMojibake) return value;
+
+  const bytes = Uint8Array.from(value, (character) => character.charCodeAt(0));
+  return new TextDecoder("utf-8").decode(bytes);
+}
