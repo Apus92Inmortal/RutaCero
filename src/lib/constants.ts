@@ -9,6 +9,7 @@ import {
   Lightbulb,
   ListChecks,
   Target,
+  UserRound,
   WalletCards,
 } from "lucide-react";
 
@@ -24,6 +25,7 @@ export const BRAND = {
 
 export const APP_NAV_ITEMS = [
   { href: "/app", label: "Dashboard", icon: Home },
+  { href: "/app/profile", label: "Perfil", icon: UserRound },
   { href: "/app/debts", label: "Deudas", icon: WalletCards },
   { href: "/app/summary", label: "Resumen", icon: BarChart3 },
   { href: "/app/simulator", label: "Simulador", icon: Gauge },
@@ -35,6 +37,10 @@ export const APP_NAV_ITEMS = [
   { href: "/app/goals", label: "Metas", icon: Target },
   { href: "/app/reports", label: "Reporte", icon: CircleDollarSign },
 ];
+
+export const MOBILE_NAV_ITEMS = APP_NAV_ITEMS.filter((item) =>
+  ["/app", "/app/debts", "/app/simulator", "/app/alerts", "/app/profile"].includes(item.href),
+);
 
 export const DEBT_TYPES = [
   { value: "credit_card", label: "Tarjeta de crédito" },

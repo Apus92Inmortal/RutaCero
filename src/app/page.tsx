@@ -1,164 +1,140 @@
-import {
-  ArrowRight,
-  BarChart3,
-  CalendarDays,
-  CheckCircle2,
-  ShieldCheck,
-  Sparkles,
-  Target,
-} from "lucide-react";
-import { BRAND } from "@/lib/constants";
-import { formatCurrency } from "@/lib/format";
+import Link from "next/link";
+import Image from "next/image";
+import { Calculator, ChartNoAxesCombined, Target } from "lucide-react";
+import { ProductPreview } from "@/components/landing/product-preview";
 import { ButtonLink } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { BRAND_ASSETS } from "@/lib/brand-assets";
 
-const benefits = [
-  "Deudas ilimitadas",
-  "Plan personalizado de salida",
-  "Simulador de pagos",
-  "Comparador de estrategias",
-  "Calendario de pagos",
-  "Alertas inteligentes",
-  "Recomendaciones automáticas",
-  "Reporte mensual",
-  "Acceso de por vida",
-];
+const features = [
+  {
+    icon: Target,
+    title: "Prioridad inteligente",
+    description: "Identificamos qué deuda pagar primero para ahorrar más.",
+  },
+  {
+    icon: Calculator,
+    title: "Simula tu salida",
+    description: "Prueba escenarios y descubre cuánto tardarás en salir de deudas.",
+  },
+  {
+    icon: ChartNoAxesCombined,
+    title: "Progreso visible",
+    description: "Sigue tu avance mes a mes con claridad y motivación.",
+  },
+] as const;
 
 export default function LandingPage() {
   return (
-    <main className="bg-background text-foreground">
-      <section className="relative overflow-hidden bg-primary text-white">
-        <div className="mx-auto grid min-h-[92vh] max-w-7xl gap-10 px-4 py-8 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:px-8">
-          <div className="max-w-3xl">
-            <Badge variant="success" className="mb-6">
-              {BRAND.productName}
-            </Badge>
-            <h1 className="text-4xl font-black leading-tight tracking-normal sm:text-5xl lg:text-6xl">
-              Sal de deudas con un plan claro, inteligente y personalizado.
-            </h1>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-white/78 sm:text-lg">
-              Ingresa tus deudas, ingresos y gastos. Ruta Cero analiza tu situación y te dice qué pagar primero,
-              cuánto abonar y cómo salir más rápido.
+    <main className="min-h-screen bg-white text-foreground">
+      <header className="sticky top-0 z-50 border-b border-line/90 bg-white/95 backdrop-blur-sm">
+        <div className="mx-auto flex h-20 max-w-[1780px] items-center justify-between px-5 sm:h-[90px] sm:px-8 xl:px-12">
+          <Link href="/" aria-label="Ruta Cero by INTRA, inicio" className="flex items-center">
+            <Image
+              src={BRAND_ASSETS.rutaCero.appIcon}
+              alt="Ruta Cero by INTRA"
+              width={48}
+              height={48}
+              priority
+              className="h-11 w-11 rounded-xl object-contain sm:h-12 sm:w-12"
+            />
+          </Link>
+
+          <nav aria-label="Navegación principal" className="hidden items-center gap-10 lg:flex xl:gap-14">
+            <Link className="text-base font-medium text-foreground hover:text-primary" href="#como-funciona">
+              Cómo funciona
+            </Link>
+            <Link className="text-base font-medium text-foreground hover:text-primary" href="#beneficios">
+              Beneficios
+            </Link>
+            <Link className="text-base font-medium text-foreground hover:text-primary" href="#acceso-vitalicio">
+              Acceso vitalicio
+            </Link>
+          </nav>
+
+          <div className="flex items-center gap-3 sm:gap-6">
+            <Link className="hidden text-base font-medium text-foreground hover:text-primary sm:inline" href="/login">
+              Iniciar sesión
+            </Link>
+            <ButtonLink href="/register" variant="success" className="h-12 px-4 text-sm text-white sm:px-6 sm:text-base">
+              Obtener acceso
+            </ButtonLink>
+          </div>
+        </div>
+      </header>
+
+      <section className="overflow-hidden border-b border-line/70 bg-[#f4f8fb]" aria-labelledby="landing-heading">
+        <div className="mx-auto grid max-w-[1780px] items-center gap-12 px-5 py-14 sm:px-8 sm:py-16 xl:min-h-[612px] xl:grid-cols-[minmax(430px,0.6fr)_minmax(680px,1fr)] xl:gap-14 xl:px-12 xl:py-8">
+          <div className="relative z-10 max-w-[620px] xl:translate-y-3 xl:pl-4">
+            <Image
+              src={BRAND_ASSETS.rutaCero.logoPrimary}
+              alt="Ruta Cero by INTRA"
+              width={320}
+              height={80}
+              priority
+              className="h-auto w-64 max-w-full object-contain sm:w-80"
+            />
+            <p className="mt-8 text-xs font-extrabold uppercase tracking-[0.14em] text-[#14994f] sm:text-sm">
+              Ruta Cero — Acceso vitalicio
             </p>
+            <h1
+              id="landing-heading"
+              className="mt-7 text-[clamp(3rem,4.3vw,4rem)] font-black leading-[1.04] tracking-normal text-primary"
+            >
+              <span className="block">Sal de deudas</span>
+              <span className="block">con un plan claro.</span>
+            </h1>
+            <p className="mt-6 max-w-[525px] text-lg leading-8 text-muted sm:text-2xl sm:leading-10">
+              Organiza tus deudas, descubre qué pagar primero y avanza con una ruta hecha para ti.
+            </p>
+
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/register" size="lg" variant="success">
-                Obtener acceso vitalicio <ArrowRight className="h-5 w-5" />
+              <ButtonLink href="/register" size="lg" variant="success" className="h-16 min-w-64 text-lg text-white">
+                Crear mi plan
               </ButtonLink>
-              <ButtonLink href="/login" size="lg" variant="secondary">
-                Ya tengo cuenta
+              <ButtonLink href="#como-funciona" size="lg" variant="secondary" className="h-16 min-w-64 text-lg">
+                Ver cómo funciona
               </ButtonLink>
             </div>
-            <p className="mt-4 text-sm font-semibold text-white/70">
-              Un solo pago. Sin suscripciones. Sin cobros mensuales.
+
+            <p id="acceso-vitalicio" className="mt-8 text-sm font-medium text-muted sm:text-lg">
+              Pago único de $49.900 COP · Sin suscripciones
             </p>
           </div>
 
-          <div className="pb-10 lg:pb-0">
-            <div className="rounded-lg border border-white/15 bg-white p-4 text-primary shadow-2xl">
-              <div className="flex items-center justify-between gap-3 border-b border-line pb-4">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">Vista de producto</p>
-                  <p className="mt-1 text-lg font-black">Tu ruta hacia cero deudas</p>
-                </div>
-                <Badge variant="success">Pago único</Badge>
-              </div>
-              <div className="grid gap-3 py-4 sm:grid-cols-2">
-                <div className="rounded-lg bg-[#f4f7fa] p-4">
-                  <BarChart3 className="h-5 w-5 text-success" />
-                  <p className="mt-4 text-xs font-semibold text-muted">Total adeudado</p>
-                  <p className="mt-1 text-2xl font-black">{formatCurrency(12400000)}</p>
-                </div>
-                <div className="rounded-lg bg-[#f4f7fa] p-4">
-                  <Target className="h-5 w-5 text-danger" />
-                  <p className="mt-4 text-xs font-semibold text-muted">Deuda objetivo</p>
-                  <p className="mt-1 text-lg font-black">Tarjeta principal</p>
-                </div>
-              </div>
-              <div className="rounded-lg bg-primary p-4 text-white">
-                <p className="text-sm font-semibold text-white/70">Tu recomendación de este mes</p>
-                <p className="mt-2 text-xl font-black">Prioriza la deuda de mayor tasa</p>
-                <p className="mt-2 text-sm leading-6 text-white/75">
-                  Reducirás intereses y podrás adelantar tu fecha estimada de salida.
-                </p>
-              </div>
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                {[
-                  ["Score", "74/100"],
-                  ["Salida", "18 meses"],
-                  ["Ahorro", "$820.000"],
-                ].map(([label, value]) => (
-                  <div key={label} className="rounded-lg border border-line p-3">
-                    <p className="text-xs text-muted">{label}</p>
-                    <p className="mt-1 font-black">{value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div id="como-funciona" className="w-full max-w-[920px] scroll-mt-28">
+            <ProductPreview />
           </div>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-6 px-4 py-16 sm:px-6 lg:grid-cols-3 lg:px-8">
-        {[
-          {
-            icon: Sparkles,
-            title: "Recomendación automática",
-            text: "Ruta Cero ordena tus deudas por urgencia, tasa, saldo y capacidad de pago.",
-          },
-          {
-            icon: CalendarDays,
-            title: "Calendario accionable",
-            text: "Visualiza próximos pagos y registra avances sin perder el hilo de tu plan.",
-          },
-          {
-            icon: ShieldCheck,
-            title: "Diseñado para decidir",
-            text: "Compara bola de nieve, avalancha, consolidación y refinanciación con contexto real.",
-          },
-        ].map((item) => {
-          const Icon = item.icon;
-          return (
-            <div key={item.title} className="rounded-lg border border-line bg-white p-6 shadow-sm">
-              <Icon className="h-7 w-7 text-success" />
-              <h2 className="mt-5 text-lg font-black text-primary">{item.title}</h2>
-              <p className="mt-3 text-sm leading-6 text-muted">{item.text}</p>
-            </div>
-          );
-        })}
-      </section>
+      <section id="beneficios" className="scroll-mt-24 px-5 pt-5 pb-14 sm:px-8 sm:pt-5 sm:pb-16" aria-labelledby="benefits-heading">
+        <div className="mx-auto max-w-[1480px]">
+          <h2 id="benefits-heading" className="text-center text-3xl font-black tracking-normal text-primary sm:text-4xl">
+            Decisiones claras, mes a mes
+          </h2>
 
-      <section className="bg-white py-16">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.9fr_1fr] lg:items-center lg:px-8">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-success">Acceso vitalicio</p>
-            <h2 className="mt-4 text-3xl font-black tracking-normal text-primary sm:text-4xl">
-              Paga una vez y empieza con un plan financiero personal.
-            </h2>
-            <p className="mt-4 text-base leading-7 text-muted">{BRAND.commercialCopy}</p>
-          </div>
-          <div className="rounded-lg border border-line bg-background p-6 shadow-sm">
-            <div className="flex flex-col gap-4 border-b border-line pb-5 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <h3 className="text-2xl font-black text-primary">Acceso vitalicio</h3>
-                <p className="mt-1 text-sm text-muted">Precio de lanzamiento por tiempo limitado.</p>
-              </div>
-              <div className="text-4xl font-black text-primary">{formatCurrency(BRAND.price)}</div>
-            </div>
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              {benefits.map((benefit) => (
-                <div key={benefit} className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  <CheckCircle2 className="h-4 w-4 text-success" />
-                  {benefit}
-                </div>
-              ))}
-            </div>
-            <ButtonLink href="/register" className="mt-7 w-full" size="lg">
-              Pagar una vez y empezar
-            </ButtonLink>
+          <div className="mt-6 grid gap-5 md:grid-cols-3 lg:gap-7">
+            {features.map((feature) => {
+              const Icon = feature.icon;
+
+              return (
+                <article
+                  key={feature.title}
+                  className="flex min-h-36 items-center gap-5 rounded-xl border border-line bg-white p-6 shadow-sm"
+                >
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-line/80 text-primary">
+                    <Icon className="h-8 w-8" strokeWidth={1.8} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-extrabold tracking-normal text-primary">{feature.title}</h3>
+                    <p className="mt-2 max-w-xs text-sm leading-6 text-muted">{feature.description}</p>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
     </main>
   );
 }
-

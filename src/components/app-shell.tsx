@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { LogOut } from "lucide-react";
-import { APP_NAV_ITEMS, BRAND } from "@/lib/constants";
+import { BRAND_ASSETS } from "@/lib/brand-assets";
+import { APP_NAV_ITEMS, BRAND, MOBILE_NAV_ITEMS } from "@/lib/constants";
 import { logoutAction } from "@/lib/actions/auth";
 import type { Profile } from "@/lib/types";
 import { cn } from "@/lib/cn";
@@ -17,17 +19,25 @@ export function AppShell({
 }) {
   const pathname = usePathname();
   const firstName = profile.full_name?.split(" ")[0] ?? "Ruta Cero";
+  const isActive = (href: string) => (href === "/app" ? pathname === href : pathname === href || pathname.startsWith(`${href}/`));
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
       <aside className="fixed inset-y-0 left-0 z-20 hidden w-72 border-r border-line bg-white md:flex md:flex-col">
-        <Link href="/app" className="border-b border-line px-6 py-5">
-          <div className="text-xl font-black text-primary">{BRAND.name}</div>
+        <Link href="/app" aria-label="Ruta Cero by INTRA, dashboard" className="border-b border-line px-6 py-5">
+          <Image
+            src={BRAND_ASSETS.rutaCero.logoCompact}
+            alt="Ruta Cero by INTRA"
+            width={180}
+            height={60}
+            priority
+            className="h-12 w-auto object-contain"
+          />
           <div className="mt-1 text-xs font-medium text-muted">{BRAND.slogan}</div>
         </Link>
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
           {APP_NAV_ITEMS.map((item) => {
-            const active = pathname === item.href;
+            const active = isActive(item.href);
             const Icon = item.icon;
             return (
               <Link
@@ -68,9 +78,9 @@ export function AppShell({
       </div>
 
       <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-line bg-white md:hidden">
-        {APP_NAV_ITEMS.slice(0, 5).map((item) => {
+        {MOBILE_NAV_ITEMS.map((item) => {
           const Icon = item.icon;
-          const active = pathname === item.href;
+          const active = isActive(item.href);
           return (
             <Link
               key={item.href}
@@ -89,4 +99,3 @@ export function AppShell({
     </div>
   );
 }
-
