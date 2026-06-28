@@ -9,6 +9,8 @@ import { loginSchema, registerSchema, type FormState } from "@/lib/validations";
 
 async function ensurePendingProfile(userId: string, fullName: string) {
   const service = getServiceSupabaseClient();
+  if (!service) return;
+
   const payload = {
     id: userId,
     full_name: fullName,
@@ -17,15 +19,7 @@ async function ensurePendingProfile(userId: string, fullName: string) {
     onboarding_completed: false,
   };
 
-  if (service) {
-    await service.from("profiles").upsert(payload, { onConflict: "id" });
-    return;
-  }
-
-  const supabase = await createServerSupabaseClient();
-  if (supabase) {
-    await supabase.from("profiles").upsert(payload, { onConflict: "id" });
-  }
+  await service.from("profiles").upsert(payload, { onConflict: "id" });
 }
 
 export async function registerAction(_state: FormState, formData: FormData): Promise<FormState> {
@@ -45,6 +39,13 @@ export async function registerAction(_state: FormState, formData: FormData): Pro
 
   if (error) return { error: error.message };
   if (data.user) await ensurePendingProfile(data.user.id, parsed.data.full_name);
+
+  if (!data.session) {
+    return {
+      success:
+        "Cuenta creada. Revisa tu correo para confirmar la cuenta y luego inicia sesión para completar el pago único.",
+    };
+  }
 
   redirect("/checkout");
 }
@@ -74,4 +75,3 @@ export async function logoutAction() {
   await supabase?.auth.signOut();
   redirect("/login");
 }
-

@@ -27,7 +27,6 @@ export async function POST(request: NextRequest) {
     amount: BRAND.price,
     currency: BRAND.currency,
     product_name: BRAND.productName,
-    payment_status: "pending",
     checkout_url: checkoutUrl,
   };
 

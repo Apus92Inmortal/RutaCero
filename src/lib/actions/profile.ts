@@ -6,6 +6,7 @@ import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { onboardingSchema, type FormState } from "@/lib/validations";
 
 export async function completeOnboardingAction(_state: FormState, formData: FormData): Promise<FormState> {
+  const redirectTo = formData.get("redirect_to") === "/app/profile" ? "/app/profile" : "/app";
   const parsed = onboardingSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Revisa los datos." };
 
@@ -22,6 +23,5 @@ export async function completeOnboardingAction(_state: FormState, formData: Form
     .eq("id", user.id);
 
   if (error) return { error: error.message };
-  redirect("/app");
+  redirect(redirectTo);
 }
-

@@ -11,6 +11,12 @@ Ruta Cero es una app web fintech para organizar, analizar y eliminar deudas medi
 - Recharts
 - React Hook Form + Zod
 
+## Documentacion oficial
+
+- Manual Maestro de Documentacion Ruta Cero v1.0: `docs/Manual_Maestro_Documentacion_Ruta_Cero_v1_0.pdf`
+- Manual UI/UX Ruta Cero vigente: v1.1, estado Oficial - uso controlado, en `docs/manuals/official/Manual_UIUX_Ruta_Cero_v1_1_Oficial.pdf`
+- El manual UI/UX anterior queda archivado como derogado en `docs/manuals/deprecated/` y no debe usarse como referencia vigente.
+
 ## Instalación
 
 ```bash
@@ -95,6 +101,8 @@ npm run lint
 - `/payment-required`, `/payment-pending`, `/payment-success`, `/payment-failed`
 - `/app`
 - `/app/onboarding`
+- `/app/profile`
+- `/app/profile/financial-plan`
 - `/app/debts`
 - `/app/simulator`
 - `/app/strategies`

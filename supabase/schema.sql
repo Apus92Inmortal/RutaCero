@@ -102,6 +102,7 @@ create table if not exists public.strategies (
 create or replace function public.set_updated_at()
 returns trigger
 language plpgsql
+set search_path = public
 as $$
 begin
   new.updated_at = now();
@@ -150,44 +151,76 @@ alter table public.goals enable row level security;
 alter table public.alerts enable row level security;
 alter table public.strategies enable row level security;
 
-create policy "profiles_select_own" on public.profiles for select using (auth.uid() = id);
-create policy "profiles_insert_own" on public.profiles for insert with check (auth.uid() = id);
-create policy "profiles_update_own" on public.profiles for update using (auth.uid() = id) with check (auth.uid() = id);
-create policy "profiles_delete_own" on public.profiles for delete using (auth.uid() = id);
+create policy "profiles_select_own" on public.profiles for select using ((select auth.uid()) = id);
+create policy "profiles_update_own" on public.profiles for update using ((select auth.uid()) = id) with check ((select auth.uid()) = id);
 
-create policy "debts_select_own" on public.debts for select using (auth.uid() = user_id);
-create policy "debts_insert_own" on public.debts for insert with check (auth.uid() = user_id);
-create policy "debts_update_own" on public.debts for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
-create policy "debts_delete_own" on public.debts for delete using (auth.uid() = user_id);
+create policy "debts_select_own" on public.debts for select using ((select auth.uid()) = user_id);
+create policy "debts_insert_own" on public.debts for insert with check ((select auth.uid()) = user_id);
+create policy "debts_update_own" on public.debts for update using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+create policy "debts_delete_own" on public.debts for delete using ((select auth.uid()) = user_id);
 
-create policy "debt_payments_select_own" on public.debt_payments for select using (auth.uid() = user_id);
-create policy "debt_payments_insert_own" on public.debt_payments for insert with check (auth.uid() = user_id);
-create policy "debt_payments_update_own" on public.debt_payments for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
-create policy "debt_payments_delete_own" on public.debt_payments for delete using (auth.uid() = user_id);
+create policy "debt_payments_select_own" on public.debt_payments for select using ((select auth.uid()) = user_id);
+create policy "debt_payments_insert_own" on public.debt_payments for insert with check ((select auth.uid()) = user_id);
+create policy "debt_payments_update_own" on public.debt_payments for update using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+create policy "debt_payments_delete_own" on public.debt_payments for delete using ((select auth.uid()) = user_id);
 
-create policy "access_payments_select_own" on public.access_payments for select using (auth.uid() = user_id);
-create policy "access_payments_insert_own" on public.access_payments for insert with check (auth.uid() = user_id);
-create policy "access_payments_update_own" on public.access_payments for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
-create policy "access_payments_delete_own" on public.access_payments for delete using (auth.uid() = user_id);
+create policy "access_payments_select_own" on public.access_payments for select using ((select auth.uid()) = user_id);
+create policy "access_payments_insert_own" on public.access_payments for insert with check ((select auth.uid()) = user_id);
 
-create policy "goals_select_own" on public.goals for select using (auth.uid() = user_id);
-create policy "goals_insert_own" on public.goals for insert with check (auth.uid() = user_id);
-create policy "goals_update_own" on public.goals for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
-create policy "goals_delete_own" on public.goals for delete using (auth.uid() = user_id);
+create policy "goals_select_own" on public.goals for select using ((select auth.uid()) = user_id);
+create policy "goals_insert_own" on public.goals for insert with check ((select auth.uid()) = user_id);
+create policy "goals_update_own" on public.goals for update using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+create policy "goals_delete_own" on public.goals for delete using ((select auth.uid()) = user_id);
 
-create policy "alerts_select_own" on public.alerts for select using (auth.uid() = user_id);
-create policy "alerts_insert_own" on public.alerts for insert with check (auth.uid() = user_id);
-create policy "alerts_update_own" on public.alerts for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
-create policy "alerts_delete_own" on public.alerts for delete using (auth.uid() = user_id);
+create policy "alerts_select_own" on public.alerts for select using ((select auth.uid()) = user_id);
+create policy "alerts_insert_own" on public.alerts for insert with check ((select auth.uid()) = user_id);
+create policy "alerts_update_own" on public.alerts for update using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+create policy "alerts_delete_own" on public.alerts for delete using ((select auth.uid()) = user_id);
 
-create policy "strategies_select_own" on public.strategies for select using (auth.uid() = user_id);
-create policy "strategies_insert_own" on public.strategies for insert with check (auth.uid() = user_id);
-create policy "strategies_update_own" on public.strategies for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
-create policy "strategies_delete_own" on public.strategies for delete using (auth.uid() = user_id);
+create policy "strategies_select_own" on public.strategies for select using ((select auth.uid()) = user_id);
+create policy "strategies_insert_own" on public.strategies for insert with check ((select auth.uid()) = user_id);
+create policy "strategies_update_own" on public.strategies for update using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+create policy "strategies_delete_own" on public.strategies for delete using ((select auth.uid()) = user_id);
 
 create index if not exists debts_user_id_idx on public.debts(user_id);
 create index if not exists debt_payments_user_id_idx on public.debt_payments(user_id);
 create index if not exists access_payments_user_id_idx on public.access_payments(user_id);
+create unique index if not exists access_payments_provider_payment_id_idx
+on public.access_payments(provider_payment_id)
+where provider_payment_id is not null;
 create index if not exists goals_user_id_idx on public.goals(user_id);
 create index if not exists alerts_user_id_idx on public.alerts(user_id);
 create index if not exists strategies_user_id_idx on public.strategies(user_id);
+create index if not exists alerts_debt_id_idx on public.alerts(debt_id);
+create index if not exists debt_payments_debt_id_idx on public.debt_payments(debt_id);
+
+-- Users can update their financial profile, but access fields are server-only.
+revoke insert, delete on public.profiles from authenticated;
+revoke update on public.profiles from authenticated;
+grant update (
+  full_name,
+  currency,
+  monthly_income,
+  fixed_expenses,
+  variable_expenses,
+  debt_budget,
+  extra_payment_capacity,
+  urgency_level,
+  onboarding_completed
+) on public.profiles to authenticated;
+
+-- Access payment status is authoritative from the payment webhook.
+revoke insert on public.access_payments from authenticated;
+grant insert (
+  user_id,
+  provider,
+  provider_payment_id,
+  amount,
+  currency,
+  product_name,
+  checkout_url
+) on public.access_payments to authenticated;
+revoke update, delete on public.access_payments from authenticated;
+
+-- Trigger functions are not public RPC endpoints.
+revoke execute on function public.handle_new_user() from public, anon, authenticated;

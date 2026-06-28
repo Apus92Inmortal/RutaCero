@@ -42,6 +42,11 @@ export function RegisterForm() {
         <Input type="password" autoComplete="new-password" {...register("password")} />
       </Field>
       {state.error ? <p className="text-sm font-medium text-danger">{state.error}</p> : null}
+      {state.success ? (
+        <p className="rounded-lg bg-[#e8f9ef] p-3 text-sm font-medium leading-6 text-[#14753b]">
+          {state.success}
+        </p>
+      ) : null}
       <Button className="w-full" disabled={pending}>
         {pending ? "Creando cuenta..." : "Crear cuenta y continuar"}
       </Button>

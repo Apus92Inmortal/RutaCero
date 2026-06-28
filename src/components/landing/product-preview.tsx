@@ -57,14 +57,14 @@ function DebtProjectionChart() {
         </div>
       </div>
 
-      <svg viewBox="0 0 500 170" role="img" aria-label="La deuda disminuye durante dieciocho meses" className="mt-2 w-full">
-        <g stroke="#D9E2EC" strokeWidth="1">
+      <svg viewBox="0 0 500 170" role="img" aria-label="La deuda disminuye durante dieciocho meses en datos demo" className="mt-2 w-full">
+        <g stroke="var(--border)" strokeWidth="1">
           <path d="M42 20H490" />
           <path d="M42 63H490" />
           <path d="M42 106H490" />
           <path d="M42 149H490" />
         </g>
-        <g fill="#52616B" fontSize="10" fontFamily="Inter, sans-serif">
+        <g fill="var(--secondary-text)" fontSize="10" fontFamily="Inter, sans-serif">
           <text x="2" y="24">$15M</text>
           <text x="6" y="67">$10M</text>
           <text x="12" y="110">$5M</text>
@@ -80,14 +80,14 @@ function DebtProjectionChart() {
         <path
           d="M44 41 C92 49 119 52 156 55 S225 58 256 68 S308 75 329 87 S374 94 392 109 S433 117 450 131 S476 139 488 145"
           fill="none"
-          stroke="#0B2C4A"
+          stroke="var(--primary)"
           strokeWidth="3"
           strokeLinecap="round"
         />
         <path
           d="M44 43 C83 56 118 75 156 90 S226 117 266 129 S340 142 385 147 S452 149 488 149"
           fill="none"
-          stroke="#20AE5B"
+          stroke="var(--success)"
           strokeWidth="2.5"
           strokeDasharray="7 7"
           strokeLinecap="round"
@@ -99,7 +99,7 @@ function DebtProjectionChart() {
 
 export function ProductPreview() {
   return (
-    <div className="overflow-hidden rounded-xl border border-[#c9d6e0] bg-white shadow-[0_18px_50px_rgba(11,44,74,0.16)]">
+    <div className="overflow-hidden rounded-lg border border-line bg-white shadow-xl shadow-primary/10">
       <div className="grid min-h-[540px] sm:grid-cols-[116px_minmax(0,1fr)]">
         <aside className="hidden border-r border-line bg-white p-3 sm:block" aria-label="Vista previa de navegación">
           <Image
@@ -129,9 +129,14 @@ export function ProductPreview() {
         </aside>
 
         <div className="min-w-0 p-4 sm:p-5">
-          <h2 className="text-xl font-black tracking-normal text-primary sm:text-2xl lg:text-[1.7rem]">
-            Tu ruta hacia cero deudas
-          </h2>
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <h2 className="text-xl font-black tracking-normal text-primary sm:text-2xl lg:text-[1.7rem]">
+              Tu ruta hacia cero deudas
+            </h2>
+            <span className="rounded-full border border-line bg-[#eef4f8] px-3 py-1 text-[10px] font-bold text-primary">
+              Datos demo
+            </span>
+          </div>
 
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
             {metrics.map((metric) => {
@@ -142,11 +147,11 @@ export function ProductPreview() {
                 <div key={metric.label} className="flex min-h-24 items-center justify-between gap-2 rounded-lg border border-line p-3">
                   <div className="min-w-0">
                     <p className="text-[9px] font-medium text-muted sm:text-[10px]">{metric.label}</p>
-                    <p className={`mt-2 whitespace-nowrap text-lg font-black ${isGreen ? "text-[#13a653]" : "text-primary"}`}>
+                    <p className="mt-2 whitespace-nowrap text-lg font-black text-primary">
                       {metric.value}
                     </p>
                   </div>
-                  <div className={`hidden rounded-full p-2 lg:block ${isGreen ? "bg-[#e8f9ef] text-[#13a653]" : "bg-[#eef4f8] text-primary"}`}>
+                  <div className={`hidden rounded-full p-2 2xl:block ${isGreen ? "bg-success/15 text-success" : "bg-[#eef4f8] text-primary"}`}>
                     <Icon className="h-5 w-5" strokeWidth={1.8} />
                   </div>
                 </div>
@@ -159,7 +164,7 @@ export function ProductPreview() {
               <Lightbulb className="h-8 w-8 text-success" strokeWidth={1.7} />
               <p className="mt-5 text-[11px] font-medium text-white/80">Tu recomendación</p>
               <p className="mt-3 text-lg font-black leading-tight">Prioriza la deuda de mayor tasa</p>
-              <span className="mt-4 inline-flex rounded-md border border-[#72e79f] bg-[#1bb35c] px-3 py-1 text-[10px] font-semibold text-white">
+              <span className="mt-4 inline-flex rounded-md border border-success/35 bg-success px-3 py-1 text-[10px] font-semibold text-primary">
                 Avalancha
               </span>
             </div>
@@ -170,11 +175,11 @@ export function ProductPreview() {
           <div className="mt-3 rounded-lg border border-line bg-white px-4 py-3">
             <div className="flex items-center justify-between gap-4 text-[10px]">
               <span className="font-bold text-primary">Progreso del plan</span>
-              <span className="font-semibold text-[#13a653]">42% completado</span>
+              <span className="font-semibold text-primary">42% completado</span>
             </div>
             <div className="mt-2 flex items-center gap-4">
-              <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#e5ebf0]">
-                <div className="h-full w-[42%] rounded-full bg-[#20ae5b]" />
+              <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#e1e9f0]">
+                <div className="h-full w-[42%] rounded-full bg-success" />
               </div>
               <span className="whitespace-nowrap text-[9px] text-muted">7 de 18 meses</span>
             </div>

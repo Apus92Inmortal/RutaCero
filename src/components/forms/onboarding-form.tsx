@@ -10,7 +10,17 @@ import { Button } from "@/components/ui/button";
 import { Field, Input, Select } from "@/components/ui/field";
 import type { Profile } from "@/lib/types";
 
-export function OnboardingForm({ profile }: { profile: Profile }) {
+export function OnboardingForm({
+  profile,
+  submitLabel = "Crear mi plan financiero",
+  pendingLabel = "Guardando...",
+  redirectTo = "/app",
+}: {
+  profile: Profile;
+  submitLabel?: string;
+  pendingLabel?: string;
+  redirectTo?: "/app" | "/app/profile";
+}) {
   const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction, pending] = useActionState<FormState, FormData>(completeOnboardingAction, {});
   const {
@@ -42,6 +52,7 @@ export function OnboardingForm({ profile }: { profile: Profile }) {
       }}
       className="grid gap-4 md:grid-cols-2"
     >
+      <input type="hidden" name="redirect_to" value={redirectTo} />
       <Field label="Nombre" error={errors.full_name?.message}>
         <Input {...register("full_name")} />
       </Field>
@@ -71,7 +82,7 @@ export function OnboardingForm({ profile }: { profile: Profile }) {
       </Field>
       <div className="flex items-end">
         <Button className="w-full" disabled={pending}>
-          {pending ? "Guardando..." : "Crear mi plan financiero"}
+          {pending ? pendingLabel : submitLabel}
         </Button>
       </div>
       {state.error ? <p className="md:col-span-2 text-sm font-medium text-danger">{state.error}</p> : null}
